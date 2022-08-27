@@ -1,10 +1,10 @@
 import { Grid, Button, Box, Container } from "@mui/material";
-import React from "react";
+import { FC } from "react";
 import firebase from "firebase/compat/app";
 import { auth } from "../firebaseSetup";
 
-const Login = () => {
-  const login = async () => {
+const Login: FC = () => {
+  const onLogin = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     const { user } = await auth.signInWithPopup(provider);
     console.log(user);
@@ -25,7 +25,7 @@ const Login = () => {
           direction={"column"}
         >
           <Box p={5}>
-            <Button onClick={login} variant={"outlined"}>
+            <Button onClick={onLogin} variant={"outlined"}>
               Войти с помощью Google
             </Button>
           </Box>

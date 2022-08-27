@@ -12,7 +12,7 @@ const Loader = () => {
         justifyContent={"center"}
       >
         <Grid>
-          <div className="lds-hourglass"></div>
+          <div className="lds-hourglass">Loading</div>
         </Grid>
       </Grid>
     </Container>

@@ -2,50 +2,47 @@ import { Avatar, Button, Container, Grid, TextField } from "@mui/material";
 import { useContext, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { firestore } from "../firebaseSetup";
-import Loader from "./Loader";
 import firebase from "firebase/compat/app";
 import { AuthContext } from "../context/AuthContext";
+import Loader from "./Loader";
 
 const Chat = () => {
-  // const { auth, firestore } = useContext(Context);
-  // const user = useContext<firebase.User | null>(AuthContext);
-  const user = useContext(AuthContext);
-  console.log(user);
+  const user = useContext<firebase.User | null>(AuthContext);
   const [value, setValue] = useState("");
   // console.log(user, value);
-  // const [messages, loading] = useCollectionData(
-  //   firestore.collection("messages").orderBy("createdAt")
-  //   // firestore.collection("messages").orderBy("createdAt")
-  // ); // с помощью этого react-firebase-hooks firestore мы будем получать сообщения.
-  // // useCollectionData - Переменная, отвечает за то, что загрузились сообщения или нет. Параметром принимает запрос - firestore
-  // // orderBy('createdAt') -- сортировка по полю создания сообщения
 
-  interface ISendMessage {
-    uid: string | null;
-    displayName: string | null;
-    photoURL: string | null;
-    text: string | null;
-    createdAt: firebase.firestore.FieldValue;
-  }
+  const [messages, loading] = useCollectionData(
+    firestore.collection("messages").orderBy("createdAt")
+  ); // с помощью этого react-firebase-hooks firestore мы будем получать сообщения.
+  // useCollectionData - Переменная, отвечает за то, что загрузились сообщения или нет. Параметром принимает запрос - firestore
+  // orderBy('createdAt') -- сортировка по полю создания сообщения
 
-  const sendMessage = async () => {
+  // interface ISendMessage {
+  //   uid: string | null;
+  //   displayName: string | null;
+  //   photoURL: string | null;
+  //   text: string | null;
+  //   createdAt: firebase.firestore.FieldValue;
+  // }
+
+  const sendMessage: () => Promise<void> = async () => {
     console.log(value.trim().length); // если сообщение пустое, то метод не выполнится
-    // if (value.trim().length) {
-    //   firestore.collection("messages").add({
-    //     uid: user.uid,
-    //     displayName: user.displayName,
-    //     photoURL: user.photoURL,
-    //     text: value,
-    //     createdAt: firebase.firestore.FieldValue.serverTimestamp(), // получаем время через сервер firebase
-    //   });
+    if (value.trim().length) {
+      firestore.collection("messages").add({
+        uid: user?.uid,
+        displayName: user?.displayName,
+        photoURL: user?.photoURL,
+        text: value,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(), // получаем время через сервер firebase
+      });
 
-    //   setValue("");
-    // }
+      setValue("");
+    }
   };
 
-  // if (loading) {
-  //   return <Loader />;
-  // }
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <Container>
@@ -62,16 +59,16 @@ const Chat = () => {
             overflowY: "auto",
           }}
         >
-          {/* {messages.map((message, index) => (
+          {messages?.map((message, index) => (
             <div
               key={index}
               style={{
                 margin: 10,
                 border:
-                  user.uid === message.uid
+                  user?.uid === message.uid
                     ? "2px solid green"
                     : "2px dashed red",
-                marginLeft: user.uid === message.uid ? "auto" : "10px",
+                marginLeft: user?.uid === message.uid ? "auto" : "10px",
                 width: "fit-content",
                 padding: 5,
               }}
@@ -82,8 +79,7 @@ const Chat = () => {
               </Grid>
               <div>{message.text} </div>
             </div>
-          ))} */}{" "}
-          ыыыыыыыыыыыыыыыыыыыыыыыыыыыыыыыыыыы
+          ))}
         </div>
         <Grid
           container

@@ -9,7 +9,7 @@ import firebase from "firebase/compat/app";
 const Navbar: FC = () => {
   const user = useContext<firebase.User | null>(AuthContext);
 
-  console.log(user); // страница готова, не переделывать
+  // console.log(user); // страница готова, не переделывать
   return (
     <AppBar color="secondary" position="static">
       <Toolbar>

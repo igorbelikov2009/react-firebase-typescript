@@ -8,7 +8,7 @@ import firebase from "firebase/compat/app";
 const AppRouter: FC = () => {
   const user = useContext<firebase.User | null>(AuthContext);
 
-  console.log(user); // страница готова, не переделывать
+  // console.log(user); // страница готова, не переделывать
   // в случае, если пользователь залогинен, то user = true и нам вернется объект user,
   // по-другому нам вернётся null
 
